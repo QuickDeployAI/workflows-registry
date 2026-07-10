@@ -66,6 +66,23 @@ export async function startTestApi(): Promise<TestApi> {
         res.end(JSON.stringify({ token: SECRET }));
         return;
       }
+      // Fulfillment endpoints used by the serverless-workflow importer e2e.
+      if (req.method === "GET" && url.pathname.startsWith("/inventory/")) {
+        res.end(JSON.stringify({ orderId: url.pathname.split("/")[2], stock: 3 }));
+        return;
+      }
+      if (
+        req.method === "POST" &&
+        (url.pathname === "/couriers/reservations" || url.pathname === "/shipments")
+      ) {
+        res.statusCode = 201;
+        res.end(JSON.stringify({ id: `${url.pathname.split("/")[1]}-1`, ok: true }));
+        return;
+      }
+      if (req.method === "POST" && /^\/orders\/[^/]+\/confirm$/.test(url.pathname)) {
+        res.end(JSON.stringify({ confirmed: true }));
+        return;
+      }
       res.statusCode = 404;
       res.end(JSON.stringify({ error: "not found" }));
     });
@@ -150,8 +167,9 @@ export function permissivePolicy(
   plan: ExecutionPlanV1,
   planDigest: string,
   overrides: Partial<PolicyGrants> = {},
+  boundHosts: string[] = [],
 ): PolicyEngine {
-  const intent = derivePolicyIntent(plan, planDigest);
+  const intent = derivePolicyIntent(plan, planDigest, { boundHosts });
   const effective = computeEffectivePolicy(intent, {
     allowedHosts: ["*"],
     allowedCredentials: ["*"],

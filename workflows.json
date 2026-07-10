@@ -7,7 +7,7 @@
       "description": "Agentic spawn/fork/join with a bounded review loop (Pi Agents).",
       "labels": ["pi-agents", "agentic", "fixture"],
       "manifestPath": "registry/quickdeploy/code-review-loop.workflow.json",
-      "contentHash": "cbaa3c82320c7b542f96caa4a5f69cc00b1627ffe534f4f81378a3b11040bfe9",
+      "contentHash": "dffee95f40f2f99f9ccb926a113b19b86493b1feeaa99dade08b4511923906ed",
       "_meta": {
         "ai.quickdeploy.registry/curation": {
           "verifiedStatus": "review",

@@ -30,7 +30,12 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@quickdeployai/arazzo-2-workflows": "workspace:*",
+    "@quickdeployai/pi-agents-2-workflows": "workspace:*",
+    "@quickdeployai/serverless-workflow-2-workflows": "workspace:*",
     "@quickdeployai/workflow-core": "workspace:*",
+    "@quickdeployai/workflow-importer-kit": "workspace:*",
+    "@quickdeployai/workflow-ir": "workspace:*",
     "@quickdeployai/workflow-registry-schemas": "workspace:*",
     "yaml": "catalog:",
     "zod": "catalog:"

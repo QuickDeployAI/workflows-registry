@@ -4,7 +4,7 @@
   "budgets": {
     "maxIterations": 3,
     "maxParallelism": 2,
-    "maxDepth": 2,
+    "maxDepth": 3,
     "maxChildren": 4
   },
   "root": {
@@ -33,7 +33,9 @@
             "task": "Review the draft for security issues."
           }
         ],
-        "join": { "id": "collect-reviews" }
+        "join": {
+          "id": "collect-reviews"
+        }
       },
       {
         "type": "loop",

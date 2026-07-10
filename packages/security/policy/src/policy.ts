@@ -17,14 +17,28 @@ export interface PolicyIntent {
   writablePaths: string[];
 }
 
-export function derivePolicyIntent(plan: ExecutionPlanV1, planDigest: string): PolicyIntent {
+export interface DeriveIntentOptions {
+  /**
+   * Hosts of the endpoints actually bound at install time. Binding locks can
+   * point requirements at different hosts than the source document declared,
+   * so the intent (and therefore the effective policy) is computed over the
+   * union — what the installation will actually reach.
+   */
+  boundHosts?: string[];
+}
+
+export function derivePolicyIntent(
+  plan: ExecutionPlanV1,
+  planDigest: string,
+  options: DeriveIntentOptions = {},
+): PolicyIntent {
   const agentInvokes = Object.values(plan.nodes).filter(
     (node) => node.kind === "invoke" && lookupProtocol(plan, node.binding) === "agent",
   ).length;
 
   return {
     planDigest,
-    outboundHosts: [...plan.effects.outboundHosts].sort(),
+    outboundHosts: [...new Set([...plan.effects.outboundHosts, ...(options.boundHosts ?? [])])].sort(),
     credentialHandles: plan.credentialRequirements.map((requirement) => requirement.env).sort(),
     effects: {
       read: plan.effects.reads,

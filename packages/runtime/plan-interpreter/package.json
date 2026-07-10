@@ -37,6 +37,10 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@quickdeployai/arazzo-2-workflows": "workspace:*",
+    "@quickdeployai/pi-agents-2-workflows": "workspace:*",
+    "@quickdeployai/serverless-workflow-2-workflows": "workspace:*",
+    "@quickdeployai/workflow-importer-kit": "workspace:*",
     "@quickdeployai/workflows-registry-workspace-config": "workspace:*",
     "@types/node": "catalog:",
     "@workflow/vitest": "catalog:",
