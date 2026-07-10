@@ -62,6 +62,14 @@ Pi control graph → Workflow SDK child workflows → durable agent turn (Flue l
 | Collect-all validation with typed codes; `tsx`-run CLI in `packages/tools/workflows-cli` | both |
 | Importer naming `<source>-2-workflows` | `<x>-2-mcp`, `<x>-2-agent-skills` |
 
+Workflow catalog entries additionally carry `_meta["ai.quickdeploy.registry/monetization"]` from
+day one (the same reverse-DNS key and schema as the sibling registries): a `pricing` block
+(`per-request | metered | subscription | one-time`, decimal USD string price), the
+`acceptedProtocols` list of agentic payment protocols (`a2h`, `x402`, `l402`, `mpp`, `ap2`, `acp`,
+`ucp`), and an optional public `x402` advertisement (networks, USDC asset, `payTo` receiving
+address — a public wallet address, never a secret). Monetization metadata is advertisement only;
+payment is enforced by the capability gateway at execution time, not by this registry.
+
 ### New here
 
 - `ExecutionPlanV1` IR (invoke/choice/parallel/forEach/loop/wait/signal/approval/childWorkflow/succeed/fail)
