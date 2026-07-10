@@ -27,7 +27,9 @@ function usage(): string {
     "       workflows-cli policy --plan <path>",
     "       workflows-cli run --plan <path> [--input <json>] [--bindings <path>]",
     "       workflows-cli inspect --run <runId> [--root <dir>]",
-    "       workflows-cli approve --run <runId> --token <approvalToken>",
+    "       workflows-cli approve --token <approvalToken>",
+    "       workflows-cli bundle pack --manifest <path> --plan <path> [--out <dir>]",
+    "       workflows-cli bundle verify --dir <dir>",
     "",
     "Builds workflows.json from registry/<provider> workflow manifests; compiles,",
     "binds, policy-checks, and durably runs imported workflows.",
@@ -168,6 +170,11 @@ async function main(): Promise<number> {
     case "approve": {
       const { runKernelCommand } = await import("./kernel-commands.js");
       return runKernelCommand(command, { rootDir, positionals, flags });
+    }
+
+    case "bundle": {
+      const { runBundleCli } = await import("./kernel/bundle.js");
+      return runBundleCli({ rootDir, positionals, flags });
     }
 
     case "help":
