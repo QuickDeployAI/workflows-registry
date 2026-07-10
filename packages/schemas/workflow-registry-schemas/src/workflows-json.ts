@@ -1,0 +1,153 @@
+import { z } from "zod";
+
+export const WORKFLOWS_JSON_SCHEMA_URI = "https://quickdeploy.ai/schemas/workflows-json.schema.json";
+
+export const EXACT_VERSION_PATTERN = /^\d+\.\d+\.\d+(?:-[0-9A-Za-z-.]+)?(?:\+[0-9A-Za-z-.]+)?$/;
+
+export const QUICKDEPLOY_REGISTRY_META_PREFIX = "ai.quickdeploy.registry/";
+export const QUICKDEPLOY_REGISTRY_CURATION_META_KEY = "ai.quickdeploy.registry/curation";
+export const QUICKDEPLOY_REGISTRY_MANIFEST_META_KEY = "ai.quickdeploy.registry/manifest";
+export const QUICKDEPLOY_REGISTRY_MONETIZATION_META_KEY = "ai.quickdeploy.registry/monetization";
+
+export const QuickDeployRegistryCurationSchema = z.object({
+  verifiedStatus: z
+    .enum(["unverified", "verified", "review", "deprecated", "blocked"])
+    .default("unverified"),
+  category: z.string().min(1).optional(),
+  isOfficial: z.boolean().optional(),
+  isPaid: z.boolean().optional(),
+  tags: z.array(z.string().min(1)).default([]),
+});
+export type QuickDeployRegistryCuration = z.infer<typeof QuickDeployRegistryCurationSchema>;
+
+export const QuickDeployRegistryMonetizationSchema = z
+  .object({
+    pricing: z.object({
+      model: z.enum(["per-request", "metered", "subscription", "one-time"]),
+      /** Decimal USD string, e.g. "0.01". Omitted for metered (rate-card) pricing. */
+      price: z
+        .string()
+        .regex(/^\d+(\.\d+)?$/)
+        .optional(),
+      currency: z.literal("USD").default("USD"),
+    }),
+    /** Agentic payment protocols the capability accepts (enforced by the capability gateway). */
+    acceptedProtocols: z
+      .array(z.enum(["a2h", "x402", "l402", "mpp", "ap2", "acp", "ucp"]))
+      .default([]),
+    /** x402-specific advertisement (public, non-secret). */
+    x402: z
+      .object({
+        networks: z.array(z.enum(["base", "base-sepolia"])).default(["base"]),
+        asset: z.literal("USDC").default("USDC"),
+        /** Public receiving wallet address (NOT a secret). */
+        payTo: z.string().optional(),
+      })
+      .optional(),
+  })
+  .strict();
+export type QuickDeployRegistryMonetization = z.infer<typeof QuickDeployRegistryMonetizationSchema>;
+
+const QUICKDEPLOY_TOP_LEVEL_FIELDS = new Set([
+  "verifiedStatus",
+  "verified_status",
+  "category",
+  "isOfficial",
+  "is_official",
+  "isPaid",
+  "is_paid",
+  "tags",
+  "quickdeploy",
+  "quickDeploy",
+  "curation",
+  "manifest",
+  "monetization",
+  "pricing",
+  "acceptedProtocols",
+  "accepted_protocols",
+  "x402",
+]);
+
+export const WorkflowEntryMetaSchema = z
+  .record(z.string(), z.unknown())
+  .superRefine((meta, ctx) => {
+    const curation = meta[QUICKDEPLOY_REGISTRY_CURATION_META_KEY];
+    if (curation !== undefined) {
+      const parsed = QuickDeployRegistryCurationSchema.safeParse(curation);
+      if (!parsed.success) {
+        for (const issue of parsed.error.issues) {
+          ctx.addIssue({
+            ...issue,
+            path: [QUICKDEPLOY_REGISTRY_CURATION_META_KEY, ...issue.path],
+          });
+        }
+      }
+    }
+    const monetization = meta[QUICKDEPLOY_REGISTRY_MONETIZATION_META_KEY];
+    if (monetization !== undefined) {
+      const parsed = QuickDeployRegistryMonetizationSchema.safeParse(monetization);
+      if (!parsed.success) {
+        for (const issue of parsed.error.issues) {
+          ctx.addIssue({
+            ...issue,
+            path: [QUICKDEPLOY_REGISTRY_MONETIZATION_META_KEY, ...issue.path],
+          });
+        }
+      }
+    }
+  });
+export type WorkflowEntryMeta = z.infer<typeof WorkflowEntryMetaSchema>;
+
+export const WorkflowEntrySchema = z
+  .object({
+    name: z
+      .string()
+      .min(3)
+      .regex(/^[a-zA-Z0-9.-]+\/[a-zA-Z0-9._-]+$/),
+    version: z.string().regex(EXACT_VERSION_PATTERN).optional(),
+    description: z.string().optional(),
+    workflowPath: z.string().min(1),
+    contentHash: z
+      .string()
+      .regex(/^[a-f0-9]{64}$/)
+      .optional(),
+    labels: z.array(z.string().min(1)).optional(),
+    _meta: WorkflowEntryMetaSchema.optional(),
+  })
+  .catchall(z.unknown())
+  .superRefine((entry, ctx) => {
+    for (const key of Object.keys(entry)) {
+      if (QUICKDEPLOY_TOP_LEVEL_FIELDS.has(key)) {
+        ctx.addIssue({
+          code: "custom",
+          path: [key],
+          message: "QuickDeploy registry curation belongs under reverse-DNS _meta keys.",
+        });
+      }
+    }
+  });
+export type WorkflowEntry = z.infer<typeof WorkflowEntrySchema>;
+
+export const WorkflowsJsonEnvelopeSchema = z.object({
+  $schema: z.string().optional(),
+  generatedAt: z.string().optional(),
+  workflows: z.array(WorkflowEntrySchema).default([]),
+  _meta: z.record(z.string(), z.unknown()).optional(),
+});
+export type WorkflowsJsonEnvelope = z.infer<typeof WorkflowsJsonEnvelopeSchema>;
+
+export function quickDeployRegistryCuration(
+  entry: WorkflowEntry,
+): QuickDeployRegistryCuration | null {
+  const curation = entry._meta?.[QUICKDEPLOY_REGISTRY_CURATION_META_KEY];
+  if (curation === undefined) return null;
+  return QuickDeployRegistryCurationSchema.parse(curation);
+}
+
+export function quickDeployRegistryMonetization(
+  entry: WorkflowEntry,
+): QuickDeployRegistryMonetization | null {
+  const monetization = entry._meta?.[QUICKDEPLOY_REGISTRY_MONETIZATION_META_KEY];
+  if (monetization === undefined) return null;
+  return QuickDeployRegistryMonetizationSchema.parse(monetization);
+}
