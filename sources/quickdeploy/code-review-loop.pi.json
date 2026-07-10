@@ -1,0 +1,52 @@
+{
+  "piAgentsWorkflow": "1.0",
+  "name": "code-review-loop",
+  "budgets": {
+    "maxIterations": 3,
+    "maxParallelism": 2,
+    "maxDepth": 2,
+    "maxChildren": 4
+  },
+  "root": {
+    "type": "sequence",
+    "children": [
+      {
+        "type": "spawn",
+        "id": "author",
+        "agent": "code-author",
+        "task": "Draft the requested change."
+      },
+      {
+        "type": "fork",
+        "id": "reviewers",
+        "children": [
+          {
+            "type": "spawn",
+            "id": "correctness-reviewer",
+            "agent": "code-reviewer",
+            "task": "Review the draft for correctness."
+          },
+          {
+            "type": "spawn",
+            "id": "security-reviewer",
+            "agent": "code-reviewer",
+            "task": "Review the draft for security issues."
+          }
+        ],
+        "join": { "id": "collect-reviews" }
+      },
+      {
+        "type": "loop",
+        "id": "revise",
+        "maxIterations": 3,
+        "body": {
+          "type": "spawn",
+          "id": "reviser",
+          "agent": "code-author",
+          "task": "Address the outstanding review findings."
+        },
+        "until": "reviews-clean"
+      }
+    ]
+  }
+}

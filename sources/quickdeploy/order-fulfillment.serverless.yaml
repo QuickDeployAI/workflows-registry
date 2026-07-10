@@ -1,0 +1,59 @@
+document:
+  dsl: "1.0.0"
+  namespace: quickdeploy
+  name: order-fulfillment
+  version: "0.1.0"
+input:
+  schema:
+    format: json
+    document:
+      type: object
+      properties:
+        orderId:
+          type: string
+        priority:
+          type: string
+do:
+  - checkInventory:
+      call: http
+      with:
+        method: get
+        endpoint: https://fulfillment.example.com/inventory/{orderId}
+      retry:
+        limit:
+          attempt:
+            count: 3
+  - routeByPriority:
+      switch:
+        - express:
+            when: ${ .priority == "express" }
+            then: reserveCourier
+        - standard:
+            then: queueShipment
+  - reserveCourier:
+      call: http
+      with:
+        method: post
+        endpoint: https://fulfillment.example.com/couriers/reservations
+        body:
+          orderId: ${ .orderId }
+      then: awaitPickup
+  - queueShipment:
+      call: http
+      with:
+        method: post
+        endpoint: https://fulfillment.example.com/shipments
+        body:
+          orderId: ${ .orderId }
+      then: awaitPickup
+  - awaitPickup:
+      wait:
+        seconds: 1
+  - confirm:
+      call: http
+      with:
+        method: post
+        endpoint: https://fulfillment.example.com/orders/{orderId}/confirm
+timeout:
+  after:
+    minutes: 5

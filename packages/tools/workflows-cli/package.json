@@ -1,0 +1,48 @@
+{
+  "name": "@quickdeployai/workflows-cli",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Build, validate, import, compile, and run QuickDeploy workflows-registry artifacts.",
+  "bin": {
+    "workflows-cli": "./src/cli.mts"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "start": "tsx src/cli.mts",
+    "build:registry": "tsx src/cli.mts build",
+    "check:generated": "tsx src/cli.mts build --check",
+    "validate": "tsx src/cli.mts validate",
+    "registry:validate": "tsx src/cli.mts validate",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@quickdeployai/workflow-core": "workspace:*",
+    "@quickdeployai/workflow-registry-schemas": "workspace:*",
+    "yaml": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@quickdeployai/workflows-registry-workspace-config": "workspace:*",
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}

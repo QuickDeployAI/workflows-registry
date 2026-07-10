@@ -1,0 +1,24 @@
+{
+  "apiVersion": "quickdeploy.ai/v1",
+  "kind": "WorkflowManifest",
+  "metadata": {
+    "name": "ai.quickdeploy/petstore-checkout",
+    "version": "0.1.0",
+    "title": "Petstore checkout",
+    "description": "Multi-call API workflow: find a pet, then place an order (Arazzo 1.1).",
+    "labels": ["arazzo", "api", "fixture"]
+  },
+  "spec": {
+    "importer": {
+      "engine": "arazzo-2-workflows",
+      "versionRange": "*"
+    },
+    "source": {
+      "type": "file",
+      "uri": "sources/quickdeploy/petstore-checkout.arazzo.yaml"
+    },
+    "config": {
+      "workflowId": "checkout"
+    }
+  }
+}

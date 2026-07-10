@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://quickdeploy.ai/schemas/workflows-json.schema.json",
+  "title": "QuickDeploy workflows.json catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["workflows"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "workflows": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/workflowEntry" }
+    },
+    "_meta": { "type": "object" }
+  },
+  "$defs": {
+    "workflowEntry": {
+      "type": "object",
+      "required": ["name", "manifestPath"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$"
+        },
+        "description": { "type": "string" },
+        "labels": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "manifestPath": { "type": "string", "minLength": 1 },
+        "contentHash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "_meta": { "type": "object" }
+      },
+      "not": {
+        "anyOf": [
+          { "required": ["verifiedStatus"] },
+          { "required": ["category"] },
+          { "required": ["isOfficial"] },
+          { "required": ["isPaid"] },
+          { "required": ["tags"] },
+          { "required": ["quickdeploy"] },
+          { "required": ["curation"] },
+          { "required": ["manifest"] }
+        ]
+      }
+    }
+  }
+}

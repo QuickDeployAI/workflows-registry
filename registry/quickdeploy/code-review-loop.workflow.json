@@ -1,0 +1,27 @@
+{
+  "apiVersion": "quickdeploy.ai/v1",
+  "kind": "WorkflowManifest",
+  "metadata": {
+    "name": "ai.quickdeploy/code-review-loop",
+    "version": "0.1.0",
+    "title": "Code review loop",
+    "description": "Agentic spawn/fork/join with a bounded review loop (Pi Agents).",
+    "labels": ["pi-agents", "agentic", "fixture"]
+  },
+  "spec": {
+    "importer": {
+      "engine": "pi-agents-2-workflows",
+      "versionRange": "*"
+    },
+    "source": {
+      "type": "file",
+      "uri": "sources/quickdeploy/code-review-loop.pi.json"
+    },
+    "budgets": {
+      "maxIterations": 3,
+      "maxParallelism": 2,
+      "maxDepth": 2,
+      "maxChildren": 4
+    }
+  }
+}

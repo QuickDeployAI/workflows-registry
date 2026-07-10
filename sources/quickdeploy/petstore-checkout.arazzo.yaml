@@ -1,0 +1,42 @@
+arazzo: 1.1.0
+info:
+  title: Petstore checkout
+  summary: Find a pet, then place an order for it.
+  version: 0.1.0
+sourceDescriptions:
+  - name: petstore
+    url: ./petstore-openapi.yaml
+    type: openapi
+workflows:
+  - workflowId: checkout
+    summary: Multi-call API workflow used by the registry conformance fixtures.
+    inputs:
+      type: object
+      properties:
+        petId:
+          type: string
+    steps:
+      - stepId: findPet
+        operationId: getPetById
+        parameters:
+          - name: petId
+            in: path
+            value: $inputs.petId
+        successCriteria:
+          - condition: $statusCode == 200
+        outputs:
+          price: $response.body#/price
+      - stepId: placeOrder
+        operationId: placeOrder
+        requestBody:
+          contentType: application/json
+          payload:
+            petId: $inputs.petId
+            price: $steps.findPet.outputs.price
+            idempotencyKey: $inputs.petId
+        successCriteria:
+          - condition: $statusCode == 201
+        outputs:
+          orderId: $response.body#/id
+    outputs:
+      orderId: $steps.placeOrder.outputs.orderId
