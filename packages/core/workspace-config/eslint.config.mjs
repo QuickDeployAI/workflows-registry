@@ -1,0 +1,32 @@
+import js from "@eslint/js";
+import tseslint from "typescript-eslint";
+
+export default [
+  {
+    ignores: ["**/dist/**", "**/coverage/**", "**/node_modules/**", "**/.workflow-data/**"],
+  },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
+    files: ["**/*.{ts,mts,tsx}"],
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        { prefer: "type-imports", fixStyle: "inline-type-imports" }
+      ],
+      "@typescript-eslint/no-import-type-side-effects": "error",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_", caughtErrorsIgnorePattern: "^_" }
+      ],
+      "no-eval": "error",
+      "no-new-func": "error"
+    }
+  }
+];

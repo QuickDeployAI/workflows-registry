@@ -1,0 +1,40 @@
+{
+  "name": "@quickdeployai/workflow-bundle",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shareable workflow bundles (application/vnd.oneclick.workflow.bundle.v1): content-digested pack/verify, provenance + SBOM, env-gated cosign/ORAS seams.",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@quickdeployai/workflow-core": "workspace:*",
+    "@quickdeployai/workflow-ir": "workspace:*",
+    "@quickdeployai/workflow-policy": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@quickdeployai/workflows-registry-workspace-config": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}

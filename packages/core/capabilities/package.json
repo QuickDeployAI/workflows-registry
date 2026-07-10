@@ -1,0 +1,40 @@
+{
+  "name": "@quickdeployai/workflow-capabilities",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Capability requirements + binding locks: how portable plans bind to concrete implementations at install time.",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@quickdeployai/workflow-core": "workspace:*",
+    "@quickdeployai/workflow-ir": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@quickdeployai/workflow-expressions": "workspace:*",
+    "@quickdeployai/workflows-registry-workspace-config": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}

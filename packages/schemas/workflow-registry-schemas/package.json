@@ -13,17 +13,25 @@
       "types": "./src/index.ts",
       "import": "./src/index.ts",
       "default": "./src/index.ts"
+    },
+    "./workflow-manifest": {
+      "types": "./src/workflow-manifest.ts",
+      "import": "./src/workflow-manifest.ts",
+      "default": "./src/workflow-manifest.ts"
     }
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
     "test": "vitest run"
   },
   "dependencies": {
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@quickdeployai/workflows-registry-workspace-config": "workspace:*",
     "@types/node": "catalog:",
+    "ajv": "^8.17.1",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },

@@ -1,0 +1,43 @@
+{
+  "name": "@quickdeployai/zapier-2-workflows",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Zapier zap importer (mapping-pack based) compiled to ExecutionPlanV1.",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@quickdeployai/connector-mappings": "workspace:*",
+    "@quickdeployai/workflow-core": "workspace:*",
+    "@quickdeployai/workflow-expressions": "workspace:*",
+    "@quickdeployai/workflow-importer-kit": "workspace:*",
+    "@quickdeployai/workflow-ir": "workspace:*",
+    "yaml": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@quickdeployai/workflows-registry-workspace-config": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://quickdeploy.ai/schemas/workflows-json.schema.json",
+  "workflows": [
+    {
+      "name": "ai.quickdeploy/code-review-loop",
+      "version": "0.1.0",
+      "description": "Agentic spawn/fork/join with a bounded review loop (Pi Agents).",
+      "labels": ["pi-agents", "agentic", "fixture"],
+      "manifestPath": "registry/quickdeploy/code-review-loop.workflow.json",
+      "contentHash": "dffee95f40f2f99f9ccb926a113b19b86493b1feeaa99dade08b4511923906ed",
+      "_meta": {
+        "ai.quickdeploy.registry/curation": {
+          "verifiedStatus": "review",
+          "category": "pi-agents-2-workflows",
+          "isOfficial": true,
+          "tags": ["manifest-backed", "pi-agents", "agentic", "fixture"]
+        },
+        "ai.quickdeploy.registry/import": {
+          "engine": "pi-agents-2-workflows",
+          "conformanceLevel": 4
+        }
+      }
+    },
+    {
+      "name": "ai.quickdeploy/order-fulfillment",
+      "version": "0.1.0",
+      "description": "Choice, retry, wait, and failure paths (Serverless Workflow 1.0).",
+      "labels": ["serverless-workflow", "fixture"],
+      "manifestPath": "registry/quickdeploy/order-fulfillment.workflow.json",
+      "contentHash": "25ceadbf74e847a48b1f24a22247561466890b76c168df0163e573989e9a9890",
+      "_meta": {
+        "ai.quickdeploy.registry/curation": {
+          "verifiedStatus": "review",
+          "category": "serverless-workflow-2-workflows",
+          "isOfficial": true,
+          "tags": ["manifest-backed", "serverless-workflow", "fixture"]
+        },
+        "ai.quickdeploy.registry/import": {
+          "engine": "serverless-workflow-2-workflows",
+          "conformanceLevel": 4
+        }
+      }
+    },
+    {
+      "name": "ai.quickdeploy/petstore-checkout",
+      "version": "0.1.0",
+      "description": "Multi-call API workflow: find a pet, then place an order (Arazzo 1.1).",
+      "labels": ["arazzo", "api", "fixture"],
+      "manifestPath": "registry/quickdeploy/petstore-checkout.workflow.json",
+      "contentHash": "42fa055a2409afff3f05f9e4b96ab157a7cde7bad98d888bdc5920fb9c8019b3",
+      "_meta": {
+        "ai.quickdeploy.registry/curation": {
+          "verifiedStatus": "review",
+          "category": "arazzo-2-workflows",
+          "isOfficial": true,
+          "tags": ["manifest-backed", "arazzo", "api", "fixture"]
+        },
+        "ai.quickdeploy.registry/import": {
+          "engine": "arazzo-2-workflows",
+          "conformanceLevel": 4
+        }
+      }
+    }
+  ],
+  "_meta": {
+    "ai.quickdeploy.registry/generatedBy": "@quickdeployai/workflows-cli",
+    "ai.quickdeploy.registry/sourceCount": 3
+  }
+}

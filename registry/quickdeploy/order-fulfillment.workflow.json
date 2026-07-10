@@ -1,0 +1,21 @@
+{
+  "apiVersion": "quickdeploy.ai/v1",
+  "kind": "WorkflowManifest",
+  "metadata": {
+    "name": "ai.quickdeploy/order-fulfillment",
+    "version": "0.1.0",
+    "title": "Order fulfillment",
+    "description": "Choice, retry, wait, and failure paths (Serverless Workflow 1.0).",
+    "labels": ["serverless-workflow", "fixture"]
+  },
+  "spec": {
+    "importer": {
+      "engine": "serverless-workflow-2-workflows",
+      "versionRange": "*"
+    },
+    "source": {
+      "type": "file",
+      "uri": "sources/quickdeploy/order-fulfillment.serverless.yaml"
+    }
+  }
+}
