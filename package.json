@@ -29,8 +29,18 @@
   "packageManager": "pnpm@10.33.0",
   "pnpm": {
     "supportedArchitectures": {
-      "os": ["win32", "linux", "darwin"],
-      "cpu": ["x64", "arm64"]
+      "os": [
+        "win32",
+        "linux",
+        "darwin"
+      ],
+      "cpu": [
+        "x64",
+        "arm64"
+      ]
+    },
+    "patchedDependencies": {
+      "builtin-modules@5.0.0": "patches/builtin-modules@5.0.0.patch"
     }
   }
 }

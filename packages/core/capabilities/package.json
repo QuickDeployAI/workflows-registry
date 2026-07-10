@@ -1,8 +1,8 @@
 {
-  "name": "@quickdeployai/workflow-core",
+  "name": "@quickdeployai/workflow-capabilities",
   "version": "0.1.0",
   "private": true,
-  "description": "Shared workflows-registry helpers: source fetching, hashing, stable JSON, diagnostics.",
+  "description": "Capability requirements + binding locks: how portable plans bind to concrete implementations at install time.",
   "files": [
     "dist",
     "src"
@@ -22,7 +22,13 @@
     "lint": "eslint .",
     "test": "vitest run"
   },
+  "dependencies": {
+    "@quickdeployai/workflow-core": "workspace:*",
+    "@quickdeployai/workflow-ir": "workspace:*",
+    "zod": "catalog:"
+  },
   "devDependencies": {
+    "@quickdeployai/workflow-expressions": "workspace:*",
     "@quickdeployai/workflows-registry-workspace-config": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:",

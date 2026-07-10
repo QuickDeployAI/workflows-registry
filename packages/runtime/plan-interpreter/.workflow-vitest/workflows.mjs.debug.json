@@ -1,0 +1,9 @@
+{
+  "workflowFiles": [
+    "/home/user/workflows-registry/packages/runtime/plan-interpreter/workflows/run-execution-plan.ts",
+    "/home/user/workflows-registry/packages/runtime/plan-interpreter/workflows/spike.ts"
+  ],
+  "serdeOnlyFiles": [
+    "/home/user/workflows-registry/node_modules/.pnpm/@workflow+builders@4.1.1/node_modules/@workflow/builders/dist/serde-checker.js"
+  ]
+}

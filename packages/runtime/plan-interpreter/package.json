@@ -1,0 +1,50 @@
+{
+  "name": "@quickdeployai/plan-interpreter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Generic precompiled ExecutionPlanV1 interpreter on the Vercel Workflow SDK, plus the static durable executor surface.",
+  "files": [
+    "src",
+    "workflows",
+    "steps"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./workflows": {
+      "types": "./workflows/run-execution-plan.ts",
+      "import": "./workflows/run-execution-plan.ts",
+      "default": "./workflows/run-execution-plan.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@quickdeployai/workflow-capabilities": "workspace:*",
+    "@quickdeployai/workflow-core": "workspace:*",
+    "@quickdeployai/workflow-expressions": "workspace:*",
+    "@quickdeployai/workflow-ir": "workspace:*",
+    "@quickdeployai/workflow-policy": "workspace:*",
+    "workflow": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@quickdeployai/workflows-registry-workspace-config": "workspace:*",
+    "@types/node": "catalog:",
+    "@workflow/vitest": "catalog:",
+    "@workflow/world-local": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}

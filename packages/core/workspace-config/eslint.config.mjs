@@ -21,6 +21,10 @@ export default [
         { prefer: "type-imports", fixStyle: "inline-type-imports" }
       ],
       "@typescript-eslint/no-import-type-side-effects": "error",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_", caughtErrorsIgnorePattern: "^_" }
+      ],
       "no-eval": "error",
       "no-new-func": "error"
     }
