@@ -1,0 +1,38 @@
+{
+  "name": "@quickdeployai/agent-runtime-flue",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Flue durable-agents adapter for AgentRuntime. Fail-closed without a configured Flue endpoint.",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@quickdeployai/workflow-core": "workspace:*",
+    "@quickdeployai/agent-runtime": "workspace:*"
+  },
+  "devDependencies": {
+    "@quickdeployai/workflows-registry-workspace-config": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}

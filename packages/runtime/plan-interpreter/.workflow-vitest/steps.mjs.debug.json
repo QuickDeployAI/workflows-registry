@@ -1,6 +1,7 @@
 {
   "stepFiles": [
     "/home/user/workflows-registry/node_modules/.pnpm/workflow@4.6.0_@nestjs+common@11.1.28_reflect-metadata@0.2.2_rxjs@7.8.2__@nestjs+core@1_2d0e8b8885f204048cf0529d8e13b1c7/node_modules/workflow/dist/stdlib.js",
+    "/home/user/workflows-registry/packages/runtime/plan-interpreter/steps/agent.ts",
     "/home/user/workflows-registry/packages/runtime/plan-interpreter/steps/executors.ts",
     "/home/user/workflows-registry/packages/runtime/plan-interpreter/workflows/spike.ts"
   ],

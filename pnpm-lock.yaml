@@ -77,6 +77,47 @@ importers:
         specifier: 'catalog:'
         version: 8.63.0(eslint@9.39.4(jiti@2.7.0))(typescript@5.9.3)
 
+  packages/agent-runtime/core:
+    dependencies:
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
+  packages/agent-runtime/flue:
+    dependencies:
+      '@quickdeployai/agent-runtime':
+        specifier: workspace:*
+        version: link:../core
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
   packages/core/capabilities:
     dependencies:
       '@quickdeployai/workflow-core':
@@ -304,28 +345,9 @@ importers:
 
   packages/runtime/plan-interpreter:
     dependencies:
-      '@quickdeployai/workflow-capabilities':
+      '@quickdeployai/agent-runtime':
         specifier: workspace:*
-        version: link:../../core/capabilities
-      '@quickdeployai/workflow-core':
-        specifier: workspace:*
-        version: link:../../core/workflow-core
-      '@quickdeployai/workflow-expressions':
-        specifier: workspace:*
-        version: link:../../core/expressions
-      '@quickdeployai/workflow-ir':
-        specifier: workspace:*
-        version: link:../../core/ir
-      '@quickdeployai/workflow-policy':
-        specifier: workspace:*
-        version: link:../../security/policy
-      workflow:
-        specifier: 'catalog:'
-        version: 4.6.0(@nestjs/common@11.1.28(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.28(@nestjs/common@11.1.28(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@swc/cli@0.8.1(@swc/core@1.15.3)(chokidar@5.0.0))(@swc/core@1.15.3)(typescript@5.9.3)
-      zod:
-        specifier: 'catalog:'
-        version: 4.4.3
-    devDependencies:
+        version: link:../../agent-runtime/core
       '@quickdeployai/arazzo-2-workflows':
         specifier: workspace:*
         version: link:../../importers/arazzo-2-workflows
@@ -335,9 +357,34 @@ importers:
       '@quickdeployai/serverless-workflow-2-workflows':
         specifier: workspace:*
         version: link:../../importers/serverless-workflow-2-workflows
+      '@quickdeployai/workflow-capabilities':
+        specifier: workspace:*
+        version: link:../../core/capabilities
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+      '@quickdeployai/workflow-expressions':
+        specifier: workspace:*
+        version: link:../../core/expressions
       '@quickdeployai/workflow-importer-kit':
         specifier: workspace:*
         version: link:../../core/importer-kit
+      '@quickdeployai/workflow-ir':
+        specifier: workspace:*
+        version: link:../../core/ir
+      '@quickdeployai/workflow-policy':
+        specifier: workspace:*
+        version: link:../../security/policy
+      '@quickdeployai/workflow-sandbox':
+        specifier: workspace:*
+        version: link:../../security/sandbox
+      workflow:
+        specifier: 'catalog:'
+        version: 4.6.0(@nestjs/common@11.1.28(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.28(@nestjs/common@11.1.28(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@swc/cli@0.8.1(@swc/core@1.15.3)(chokidar@5.0.0))(@swc/core@1.15.3)(typescript@5.9.3)
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
       '@quickdeployai/workflows-registry-workspace-config':
         specifier: workspace:*
         version: link:../../core/workspace-config
@@ -379,6 +426,34 @@ importers:
         specifier: 'catalog:'
         version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
 
+  packages/security/openshell:
+    dependencies:
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+      '@quickdeployai/workflow-policy':
+        specifier: workspace:*
+        version: link:../policy
+      '@quickdeployai/workflow-sandbox':
+        specifier: workspace:*
+        version: link:../sandbox
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.0
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
   packages/security/policy:
     dependencies:
       '@quickdeployai/workflow-core':
@@ -394,6 +469,25 @@ importers:
       '@quickdeployai/workflow-expressions':
         specifier: workspace:*
         version: link:../../core/expressions
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
+  packages/security/sandbox:
+    dependencies:
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+    devDependencies:
       '@quickdeployai/workflows-registry-workspace-config':
         specifier: workspace:*
         version: link:../../core/workspace-config

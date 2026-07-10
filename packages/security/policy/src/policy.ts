@@ -36,15 +36,23 @@ export function derivePolicyIntent(
     (node) => node.kind === "invoke" && lookupProtocol(plan, node.binding) === "agent",
   ).length;
 
+  // Effect classes are requested by DECLARED capability requirements, not
+  // only by static invoke nodes — agent-proposed actions dispatch through
+  // declared requirements without a dedicated node.
+  const requirementEffects = { read: 0, mutation: 0, send: 0, destructive: 0 };
+  for (const requirement of plan.capabilityRequirements) {
+    requirementEffects[requirement.effect] += 1;
+  }
+
   return {
     planDigest,
     outboundHosts: [...new Set([...plan.effects.outboundHosts, ...(options.boundHosts ?? [])])].sort(),
     credentialHandles: plan.credentialRequirements.map((requirement) => requirement.env).sort(),
     effects: {
-      read: plan.effects.reads,
-      mutation: plan.effects.mutations,
-      send: plan.effects.sends,
-      destructive: plan.effects.destructive,
+      read: Math.max(plan.effects.reads, requirementEffects.read),
+      mutation: Math.max(plan.effects.mutations, requirementEffects.mutation),
+      send: Math.max(plan.effects.sends, requirementEffects.send),
+      destructive: Math.max(plan.effects.destructive, requirementEffects.destructive),
     },
     maxAgentSessions: Math.min(agentInvokes || plan.budgets.maxChildren, plan.budgets.maxChildren),
     maxChildWorkflows: plan.budgets.maxChildren,

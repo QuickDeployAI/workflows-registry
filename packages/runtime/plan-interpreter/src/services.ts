@@ -1,3 +1,5 @@
+import type { AgentRuntime } from "@quickdeployai/agent-runtime";
+import type { SandboxBackend } from "@quickdeployai/workflow-sandbox";
 import type { PolicyEngine } from "@quickdeployai/workflow-policy";
 import { denyAllPolicyEngine } from "@quickdeployai/workflow-policy";
 import { createFileArtifactStore, type ArtifactStore } from "./artifact-store.js";
@@ -11,34 +13,6 @@ import { createFileAuditSink, type AuditSink } from "./audit.js";
  */
 export interface McpToolClient {
   callTool(implementationId: string, toolName: string, args: unknown): Promise<unknown>;
-}
-
-export interface AgentTurnResult {
-  kind: "final" | "actions";
-  output?: unknown;
-  actions?: Array<{ requirementId: string; operation: string; input: unknown }>;
-}
-
-export interface AgentRuntime {
-  createSession(config: { agent: string; task: string; sessionKey: string }): Promise<{ sessionId: string }>;
-  nextTurn(session: { sessionId: string }, context: unknown): Promise<AgentTurnResult>;
-  appendToolResult(session: { sessionId: string }, result: unknown): Promise<void>;
-  cancel(session: { sessionId: string }): Promise<void>;
-}
-
-export interface SandboxLease {
-  leaseId: string;
-}
-
-export interface SandboxBackend {
-  createLease(request: { image?: string; snapshot?: string }): Promise<SandboxLease>;
-  execute(
-    lease: SandboxLease,
-    action: { command: string; args?: string[] },
-  ): Promise<{ exitCode: number; stdout: string; stderr: string }>;
-  snapshot(lease: SandboxLease): Promise<{ artifactRef: string }>;
-  restore(snapshot: { artifactRef: string }): Promise<SandboxLease>;
-  destroy(lease: SandboxLease): Promise<void>;
 }
 
 export interface KernelServices {

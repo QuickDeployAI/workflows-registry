@@ -18,6 +18,12 @@ import {
   recordAuditEvent,
   type DispatchRequest,
 } from "../steps/executors.js";
+import {
+  agentAppendToolResult,
+  agentCreateSession,
+  agentNextTurn,
+  compileSubplanProposal,
+} from "../steps/agent.js";
 
 export interface RunExecutionPlanInput {
   plan: ExecutionPlanV1;
@@ -263,6 +269,12 @@ async function runInvoke(
   const args = evaluateExpression(node.input, context);
   const iterationKey = iterationKeyOf(context);
 
+  if (requirement.protocol === "agent") {
+    // Agents never hide tool effects inside a step: the mediated turn loop
+    // policy-checks, approves, and durably dispatches every proposed action.
+    return runAgentLoop(state, node, requirement, binding, args, iterationKey);
+  }
+
   // Pre-flight policy: determines whether a digest-bound approval is needed
   // before dispatch (dispatch re-evaluates — defense in depth).
   const preflight = await evaluateRuntimePolicy({
@@ -328,6 +340,147 @@ async function runInvoke(
     );
   }
   throw lastError instanceof Error ? lastError : new FatalError(String(lastError));
+}
+
+/**
+ * The mediated agent-turn loop (bounded by budgets.maxIterations):
+ *   turn → final | proposed actions | proposed subplan
+ *   every action: declared-requirement check → policy → (approval) → durable
+ *   dispatch → result appended to the session
+ *   every subplan: validate → compile → digest → bounded child interpretation
+ * Session identity is stable (runId+planDigest+nodeId+iteration) so retried
+ * turns reconnect to the SAME agent session.
+ */
+async function runAgentLoop(
+  state: InterpreterState,
+  node: InvokeNode,
+  requirement: { id: string; operation: string },
+  _binding: CapabilityBinding,
+  args: unknown,
+  iterationKey: string,
+): Promise<unknown> {
+  const task = String((args as { task?: unknown } | null)?.task ?? "");
+  const agent = requirement.operation;
+  const sessionKey = `${state.runId}:${state.planDigest}:${node.id}:${iterationKey}`;
+  const identity = { runId: state.runId, planDigest: state.planDigest, nodeId: node.id };
+
+  const session = await agentCreateSession({ ...identity, agent, task, sessionKey });
+  const toolResults: unknown[] = [];
+
+  const maxTurns = state.plan.budgets.maxIterations;
+  for (let turn = 0; turn < maxTurns; turn += 1) {
+    const result = await agentNextTurn({
+      ...identity,
+      sessionId: session.sessionId,
+      context: { task, turn, toolResults },
+    });
+
+    if (result.kind === "final") {
+      return result.output;
+    }
+
+    if (result.kind === "propose-subplan") {
+      if (state.depth + 1 >= state.plan.budgets.maxDepth) {
+        throw new FatalError(`Agent subplan at "${node.id}" exceeds the depth budget.`);
+      }
+      const compiled = await compileSubplanProposal({
+        ...identity,
+        proposal: result.proposal,
+        parentBudgets: state.plan.budgets,
+      });
+      const childState: InterpreterState = {
+        runId: state.runId,
+        planDigest: compiled.childPlanDigest,
+        policyDigest: state.policyDigest,
+        plan: compiled.plan,
+        bindings: state.bindings,
+        outputs: {},
+        depth: state.depth + 1,
+      };
+      const childResult = await interpretGraph(childState, compiled.plan.entryNodeId, toolResults);
+      await agentAppendToolResult({ sessionId: session.sessionId, result: childResult });
+      toolResults.push(childResult);
+      continue;
+    }
+
+    for (const [actionIndex, action] of result.actions.entries()) {
+      const actionRequirement = state.plan.capabilityRequirements.find(
+        (candidate) => candidate.id === action.requirementId,
+      );
+      if (!actionRequirement) {
+        // "Add unknown tools and execute immediately" is in the not-allowed
+        // list: proposals must reference DECLARED capability requirements.
+        throw new FatalError(
+          `Agent at "${node.id}" proposed undeclared capability "${action.requirementId}".`,
+        );
+      }
+      const actionBinding = state.bindings.get(action.requirementId);
+      if (!actionBinding) {
+        throw new FatalError(
+          `Agent capability "${action.requirementId}" is not bound by the installation lock.`,
+        );
+      }
+
+      const preflight = await evaluateRuntimePolicy({
+        subject: `agent:${agent}`,
+        requirementId: actionRequirement.id,
+        protocol: actionRequirement.protocol,
+        operation: actionRequirement.operation,
+        effect: actionRequirement.effect,
+        planDigest: state.policyDigest,
+        runId: state.runId,
+        ...(actionBinding.endpoint === undefined ? {} : { host: hostOf(actionBinding.endpoint) }),
+        ...(actionBinding.credentialHandle === undefined
+          ? {}
+          : { credentialHandle: actionBinding.credentialHandle }),
+        args: action.input,
+      } as Parameters<typeof evaluateRuntimePolicy>[0]);
+      if (preflight.decision === "deny") {
+        throw new FatalError(
+          `Policy denied agent action ${actionRequirement.operation}: ${preflight.reason}`,
+        );
+      }
+      let approvedArgumentsDigest: string | undefined;
+      if (preflight.decision === "approval-required") {
+        const approval = await runApproval(
+          state,
+          `${node.id}:t${turn}a${actionIndex}`,
+          "business-effect",
+          action.input,
+          undefined,
+        );
+        approvedArgumentsDigest = approval.argumentsDigest;
+      }
+
+      const value = await dispatchCapability({
+        runId: state.runId,
+        planDigest: state.planDigest,
+        policyDigest: state.policyDigest,
+        nodeId: node.id,
+        attempt: 1,
+        iterationKey: `${iterationKey}|t${turn}a${actionIndex}`,
+        subject: `agent:${agent}`,
+        requirement: actionRequirement,
+        binding: actionBinding,
+        args: action.input,
+        ...(approvedArgumentsDigest === undefined ? {} : { approvedArgumentsDigest }),
+        ...(actionRequirement.effect === "read"
+          ? {}
+          : {
+              idempotency: {
+                kind: "deduplication-record" as const,
+                namespace: `${state.plan.id}:agent-actions`,
+              },
+            }),
+      });
+      await agentAppendToolResult({ sessionId: session.sessionId, result: value });
+      toolResults.push(value);
+    }
+  }
+
+  throw new FatalError(
+    `Agent loop "${node.id}" exhausted its ${maxTurns}-turn budget without a final answer.`,
+  );
 }
 
 async function serializeIdempotency(
