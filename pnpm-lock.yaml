@@ -146,6 +146,28 @@ importers:
         specifier: 'catalog:'
         version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
 
+  packages/core/connector-mappings:
+    dependencies:
+      '@quickdeployai/workflow-ir':
+        specifier: workspace:*
+        version: link:../ir
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
   packages/core/expressions:
     dependencies:
       zod:
@@ -275,8 +297,295 @@ importers:
         specifier: 'catalog:'
         version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
 
+  packages/importers/asl-2-workflows:
+    dependencies:
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+      '@quickdeployai/workflow-expressions':
+        specifier: workspace:*
+        version: link:../../core/expressions
+      '@quickdeployai/workflow-importer-kit':
+        specifier: workspace:*
+        version: link:../../core/importer-kit
+      '@quickdeployai/workflow-ir':
+        specifier: workspace:*
+        version: link:../../core/ir
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.0
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
+  packages/importers/google-workflows-2-workflows:
+    dependencies:
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+      '@quickdeployai/workflow-expressions':
+        specifier: workspace:*
+        version: link:../../core/expressions
+      '@quickdeployai/workflow-importer-kit':
+        specifier: workspace:*
+        version: link:../../core/importer-kit
+      '@quickdeployai/workflow-ir':
+        specifier: workspace:*
+        version: link:../../core/ir
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.0
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
+  packages/importers/ifttt-2-workflows:
+    dependencies:
+      '@quickdeployai/connector-mappings':
+        specifier: workspace:*
+        version: link:../../core/connector-mappings
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+      '@quickdeployai/workflow-expressions':
+        specifier: workspace:*
+        version: link:../../core/expressions
+      '@quickdeployai/workflow-importer-kit':
+        specifier: workspace:*
+        version: link:../../core/importer-kit
+      '@quickdeployai/workflow-ir':
+        specifier: workspace:*
+        version: link:../../core/ir
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.0
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
+  packages/importers/logic-apps-2-workflows:
+    dependencies:
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+      '@quickdeployai/workflow-expressions':
+        specifier: workspace:*
+        version: link:../../core/expressions
+      '@quickdeployai/workflow-importer-kit':
+        specifier: workspace:*
+        version: link:../../core/importer-kit
+      '@quickdeployai/workflow-ir':
+        specifier: workspace:*
+        version: link:../../core/ir
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.0
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
+  packages/importers/make-2-workflows:
+    dependencies:
+      '@quickdeployai/connector-mappings':
+        specifier: workspace:*
+        version: link:../../core/connector-mappings
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+      '@quickdeployai/workflow-expressions':
+        specifier: workspace:*
+        version: link:../../core/expressions
+      '@quickdeployai/workflow-importer-kit':
+        specifier: workspace:*
+        version: link:../../core/importer-kit
+      '@quickdeployai/workflow-ir':
+        specifier: workspace:*
+        version: link:../../core/ir
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.0
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
+  packages/importers/n8n-2-workflows:
+    dependencies:
+      '@quickdeployai/connector-mappings':
+        specifier: workspace:*
+        version: link:../../core/connector-mappings
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+      '@quickdeployai/workflow-expressions':
+        specifier: workspace:*
+        version: link:../../core/expressions
+      '@quickdeployai/workflow-importer-kit':
+        specifier: workspace:*
+        version: link:../../core/importer-kit
+      '@quickdeployai/workflow-ir':
+        specifier: workspace:*
+        version: link:../../core/ir
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.0
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
   packages/importers/pi-agents-2-workflows:
     dependencies:
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+      '@quickdeployai/workflow-expressions':
+        specifier: workspace:*
+        version: link:../../core/expressions
+      '@quickdeployai/workflow-importer-kit':
+        specifier: workspace:*
+        version: link:../../core/importer-kit
+      '@quickdeployai/workflow-ir':
+        specifier: workspace:*
+        version: link:../../core/ir
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.0
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
+  packages/importers/pipedream-2-workflows:
+    dependencies:
+      '@quickdeployai/connector-mappings':
+        specifier: workspace:*
+        version: link:../../core/connector-mappings
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+      '@quickdeployai/workflow-expressions':
+        specifier: workspace:*
+        version: link:../../core/expressions
+      '@quickdeployai/workflow-importer-kit':
+        specifier: workspace:*
+        version: link:../../core/importer-kit
+      '@quickdeployai/workflow-ir':
+        specifier: workspace:*
+        version: link:../../core/ir
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.0
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
+  packages/importers/power-automate-2-workflows:
+    dependencies:
+      '@quickdeployai/connector-mappings':
+        specifier: workspace:*
+        version: link:../../core/connector-mappings
       '@quickdeployai/workflow-core':
         specifier: workspace:*
         version: link:../../core/workflow-core
@@ -326,6 +635,108 @@ importers:
       yaml:
         specifier: 'catalog:'
         version: 2.9.0
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
+  packages/importers/workato-2-workflows:
+    dependencies:
+      '@quickdeployai/connector-mappings':
+        specifier: workspace:*
+        version: link:../../core/connector-mappings
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+      '@quickdeployai/workflow-expressions':
+        specifier: workspace:*
+        version: link:../../core/expressions
+      '@quickdeployai/workflow-importer-kit':
+        specifier: workspace:*
+        version: link:../../core/importer-kit
+      '@quickdeployai/workflow-ir':
+        specifier: workspace:*
+        version: link:../../core/ir
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.0
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
+  packages/importers/zapier-2-workflows:
+    dependencies:
+      '@quickdeployai/connector-mappings':
+        specifier: workspace:*
+        version: link:../../core/connector-mappings
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+      '@quickdeployai/workflow-expressions':
+        specifier: workspace:*
+        version: link:../../core/expressions
+      '@quickdeployai/workflow-importer-kit':
+        specifier: workspace:*
+        version: link:../../core/importer-kit
+      '@quickdeployai/workflow-ir':
+        specifier: workspace:*
+        version: link:../../core/ir
+      yaml:
+        specifier: 'catalog:'
+        version: 2.9.0
+      zod:
+        specifier: 'catalog:'
+        version: 4.4.3
+    devDependencies:
+      '@quickdeployai/workflows-registry-workspace-config':
+        specifier: workspace:*
+        version: link:../../core/workspace-config
+      '@types/node':
+        specifier: 'catalog:'
+        version: 24.13.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))
+
+  packages/packaging/bundle:
+    dependencies:
+      '@quickdeployai/workflow-core':
+        specifier: workspace:*
+        version: link:../../core/workflow-core
+      '@quickdeployai/workflow-ir':
+        specifier: workspace:*
+        version: link:../../core/ir
+      '@quickdeployai/workflow-policy':
+        specifier: workspace:*
+        version: link:../../security/policy
       zod:
         specifier: 'catalog:'
         version: 4.4.3
@@ -506,15 +917,45 @@ importers:
       '@quickdeployai/arazzo-2-workflows':
         specifier: workspace:*
         version: link:../../importers/arazzo-2-workflows
+      '@quickdeployai/asl-2-workflows':
+        specifier: workspace:*
+        version: link:../../importers/asl-2-workflows
+      '@quickdeployai/google-workflows-2-workflows':
+        specifier: workspace:*
+        version: link:../../importers/google-workflows-2-workflows
+      '@quickdeployai/ifttt-2-workflows':
+        specifier: workspace:*
+        version: link:../../importers/ifttt-2-workflows
+      '@quickdeployai/logic-apps-2-workflows':
+        specifier: workspace:*
+        version: link:../../importers/logic-apps-2-workflows
+      '@quickdeployai/make-2-workflows':
+        specifier: workspace:*
+        version: link:../../importers/make-2-workflows
+      '@quickdeployai/n8n-2-workflows':
+        specifier: workspace:*
+        version: link:../../importers/n8n-2-workflows
       '@quickdeployai/pi-agents-2-workflows':
         specifier: workspace:*
         version: link:../../importers/pi-agents-2-workflows
+      '@quickdeployai/pipedream-2-workflows':
+        specifier: workspace:*
+        version: link:../../importers/pipedream-2-workflows
       '@quickdeployai/plan-interpreter':
         specifier: workspace:*
         version: link:../../runtime/plan-interpreter
+      '@quickdeployai/power-automate-2-workflows':
+        specifier: workspace:*
+        version: link:../../importers/power-automate-2-workflows
       '@quickdeployai/serverless-workflow-2-workflows':
         specifier: workspace:*
         version: link:../../importers/serverless-workflow-2-workflows
+      '@quickdeployai/workato-2-workflows':
+        specifier: workspace:*
+        version: link:../../importers/workato-2-workflows
+      '@quickdeployai/workflow-bundle':
+        specifier: workspace:*
+        version: link:../../packaging/bundle
       '@quickdeployai/workflow-capabilities':
         specifier: workspace:*
         version: link:../../core/capabilities
@@ -536,6 +977,9 @@ importers:
       '@quickdeployai/workflow-registry-schemas':
         specifier: workspace:*
         version: link:../../schemas/workflow-registry-schemas
+      '@quickdeployai/zapier-2-workflows':
+        specifier: workspace:*
+        version: link:../../importers/zapier-2-workflows
       '@workflow/vitest':
         specifier: 'catalog:'
         version: 4.0.12(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))(vitest@4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0)))

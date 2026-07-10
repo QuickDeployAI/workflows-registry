@@ -65,6 +65,19 @@ export async function buildRegistryArtifacts(
   };
 }
 
+/**
+ * Conformance proven by the kernel harness, not just declared by importers.
+ * Static registry builds prove detection + schema validation (level 1); the
+ * engines listed here have registry fixtures compiled AND executed end-to-end
+ * on the Workflow SDK Local World in packages/runtime/plan-interpreter tests
+ * (importers.e2e.test.ts, agents.e2e.test.ts), which is level 4.
+ */
+const PROVEN_ENGINE_CONFORMANCE: Record<string, number> = {
+  "arazzo-2-workflows": 4,
+  "serverless-workflow-2-workflows": 4,
+  "pi-agents-2-workflows": 4,
+};
+
 async function compileWorkflowEntry(
   rootDir: string,
   source: DiscoveredWorkflowManifest,
@@ -90,9 +103,7 @@ async function compileWorkflowEntry(
       },
       [QUICKDEPLOY_REGISTRY_IMPORT_META_KEY]: {
         engine,
-        // Static registry builds prove detection + schema validation (level 1);
-        // the conformance harness raises this per-entry as importers prove more.
-        conformanceLevel: 1,
+        conformanceLevel: PROVEN_ENGINE_CONFORMANCE[engine] ?? 1,
       },
     },
   };

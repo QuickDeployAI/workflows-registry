@@ -17,7 +17,7 @@
         },
         "ai.quickdeploy.registry/import": {
           "engine": "pi-agents-2-workflows",
-          "conformanceLevel": 1
+          "conformanceLevel": 4
         }
       }
     },
@@ -37,7 +37,7 @@
         },
         "ai.quickdeploy.registry/import": {
           "engine": "serverless-workflow-2-workflows",
-          "conformanceLevel": 1
+          "conformanceLevel": 4
         }
       }
     },
@@ -57,7 +57,7 @@
         },
         "ai.quickdeploy.registry/import": {
           "engine": "arazzo-2-workflows",
-          "conformanceLevel": 1
+          "conformanceLevel": 4
         }
       }
     }
