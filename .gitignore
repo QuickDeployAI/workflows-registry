@@ -13,6 +13,7 @@ coverage/
 test-results/
 .vitest/
 .workflow-data/
+.workflow-cli/
 
 # Generated registry outputs
 registry/index.json
@@ -37,3 +38,4 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+.swc/

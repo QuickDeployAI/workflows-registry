@@ -415,21 +415,39 @@ importers:
       '@quickdeployai/pi-agents-2-workflows':
         specifier: workspace:*
         version: link:../../importers/pi-agents-2-workflows
+      '@quickdeployai/plan-interpreter':
+        specifier: workspace:*
+        version: link:../../runtime/plan-interpreter
       '@quickdeployai/serverless-workflow-2-workflows':
         specifier: workspace:*
         version: link:../../importers/serverless-workflow-2-workflows
+      '@quickdeployai/workflow-capabilities':
+        specifier: workspace:*
+        version: link:../../core/capabilities
       '@quickdeployai/workflow-core':
         specifier: workspace:*
         version: link:../../core/workflow-core
+      '@quickdeployai/workflow-expressions':
+        specifier: workspace:*
+        version: link:../../core/expressions
       '@quickdeployai/workflow-importer-kit':
         specifier: workspace:*
         version: link:../../core/importer-kit
       '@quickdeployai/workflow-ir':
         specifier: workspace:*
         version: link:../../core/ir
+      '@quickdeployai/workflow-policy':
+        specifier: workspace:*
+        version: link:../../security/policy
       '@quickdeployai/workflow-registry-schemas':
         specifier: workspace:*
         version: link:../../schemas/workflow-registry-schemas
+      '@workflow/vitest':
+        specifier: 'catalog:'
+        version: 4.0.12(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0))(vitest@4.1.10(@types/node@24.13.3)(vite@8.1.4(@types/node@24.13.3)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.0)(yaml@2.9.0)))
+      workflow:
+        specifier: 'catalog:'
+        version: 4.6.0(@nestjs/common@11.1.28(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.28(@nestjs/common@11.1.28(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2))(@swc/cli@0.8.1(@swc/core@1.15.3)(chokidar@5.0.0))(@swc/core@1.15.3)(typescript@5.9.3)
       yaml:
         specifier: 'catalog:'
         version: 2.9.0

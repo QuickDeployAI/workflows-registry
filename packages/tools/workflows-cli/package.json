@@ -32,11 +32,17 @@
   "dependencies": {
     "@quickdeployai/arazzo-2-workflows": "workspace:*",
     "@quickdeployai/pi-agents-2-workflows": "workspace:*",
+    "@quickdeployai/plan-interpreter": "workspace:*",
     "@quickdeployai/serverless-workflow-2-workflows": "workspace:*",
+    "@quickdeployai/workflow-capabilities": "workspace:*",
     "@quickdeployai/workflow-core": "workspace:*",
+    "@quickdeployai/workflow-expressions": "workspace:*",
     "@quickdeployai/workflow-importer-kit": "workspace:*",
     "@quickdeployai/workflow-ir": "workspace:*",
+    "@quickdeployai/workflow-policy": "workspace:*",
     "@quickdeployai/workflow-registry-schemas": "workspace:*",
+    "@workflow/vitest": "catalog:",
+    "workflow": "catalog:",
     "yaml": "catalog:",
     "zod": "catalog:"
   },
