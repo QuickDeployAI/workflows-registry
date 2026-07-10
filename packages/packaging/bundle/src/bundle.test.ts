@@ -82,10 +82,57 @@ describe("workflow bundles", () => {
     expect(await signer.verify("sha256:abc", signature)).toBe(true);
     expect(await signer.verify("sha256:def", signature)).toBe(false);
 
+    const savedCosign = process.env.COSIGN_BIN;
+    const savedOras = process.env.ORAS_BIN;
     delete process.env.COSIGN_BIN;
     delete process.env.ORAS_BIN;
-    expect(() => createCosignSigner()).toThrow(SigningUnavailableError);
-    expect(() => createOrasClient()).toThrow(SigningUnavailableError);
-    expect(() => createCosignSigner({ binary: "/nonexistent/cosign" })).toThrow(SigningUnavailableError);
+    try {
+      expect(() => createCosignSigner()).toThrow(SigningUnavailableError);
+      expect(() => createOrasClient()).toThrow(SigningUnavailableError);
+      expect(() => createCosignSigner({ binary: "/nonexistent/cosign" })).toThrow(SigningUnavailableError);
+    } finally {
+      if (savedCosign !== undefined) process.env.COSIGN_BIN = savedCosign;
+      if (savedOras !== undefined) process.env.ORAS_BIN = savedOras;
+    }
+  });
+});
+
+// Live round-trip against real cosign/ORAS binaries and an OCI registry.
+// Runs only when the environment provides all three (COSIGN_BIN + a key pair,
+// ORAS_BIN, WORKFLOW_BUNDLE_TEST_REGISTRY); CI without them skips.
+const LIVE = Boolean(
+  process.env.COSIGN_BIN &&
+    process.env.COSIGN_KEY_REF &&
+    process.env.COSIGN_PUBLIC_KEY_REF &&
+    process.env.ORAS_BIN &&
+    process.env.WORKFLOW_BUNDLE_TEST_REGISTRY,
+);
+
+describe.skipIf(!LIVE)("live cosign + ORAS round-trip", () => {
+  it("signs, pushes, pulls, and verifies a bundle against a real registry", async () => {
+    const bundle = packBundle(options());
+
+    const signer = createCosignSigner();
+    const { signature, keyId } = await signer.sign(bundle.bundleDigest);
+    expect(signature.length).toBeGreaterThan(0);
+    expect(keyId).toBe(process.env.COSIGN_KEY_REF);
+    expect(await signer.verify(bundle.bundleDigest, signature)).toBe(true);
+    expect(await signer.verify(`sha256:${"0".repeat(64)}`, signature)).toBe(false);
+
+    const pushDir = await mkdtemp(join(tmpdir(), "wfbundle-push-"));
+    await writeBundleDir(bundle, pushDir);
+    const oras = createOrasClient({ plainHttp: true });
+    const reference = `${process.env.WORKFLOW_BUNDLE_TEST_REGISTRY}/quickdeploy/petstore-checkout:0.1.0`;
+    const { digest } = await oras.push(pushDir, reference);
+    expect(digest).toMatch(/^sha256:[0-9a-f]{64}$/);
+
+    const pullDir = await mkdtemp(join(tmpdir(), "wfbundle-pull-"));
+    await oras.pull(reference, pullDir);
+    const restored = await readBundleDir(pullDir);
+    const verified = verifyBundle(restored);
+    expect(verified.diagnostics).toEqual([]);
+    expect(verified.valid).toBe(true);
+    expect(verified.bundleDigest).toBe(bundle.bundleDigest);
+    expect(await signer.verify(verified.bundleDigest ?? "", signature)).toBe(true);
   });
 });
