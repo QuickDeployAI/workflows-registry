@@ -32,6 +32,11 @@ Pi control graph → Workflow SDK child workflows → durable agent turn (Flue l
 
 ## Decisions
 
+Substantial changes to the registry — new engines, IR or expression changes, breaking changes,
+process changes — are proposed and reviewed as [SEPs](../seps/README.md) (Specification
+Enhancement Proposals, modeled on the MCP spec's process). Draft proposals live in
+[`seps/`](../seps/); the decisions below predate the process and are recorded here directly.
+
 1. **Runtime: the real Vercel Workflow SDK.** Local World + `@workflow/vitest` + hooks + child
    workflows. No custom `DurableWorkflowRuntime`, no in-memory "durable" engine — a parallel
    engine's semantics would inevitably diverge from real replay/suspension/retry behavior.
