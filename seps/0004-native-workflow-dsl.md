@@ -1,8 +1,8 @@
-# SEP-0000: Native Workflow DSL: `quickdeploy.workflow/v1`
+# SEP-0004: Native Workflow DSL: `quickdeploy.workflow/v1`
 
 | | |
 | --- | --- |
-| **SEP** | 0000 (set to the PR number after opening the PR) |
+| **SEP** | [0004](https://github.com/QuickDeployAI/workflows-registry/pull/4) |
 | **Title** | Native Workflow DSL: `quickdeploy.workflow/v1` |
 | **Author(s)** | Tyler Kendrick \<contact.tylerkendrick@gmail.com\> |
 | **Status** | draft |

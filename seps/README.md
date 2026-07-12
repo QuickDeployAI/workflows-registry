@@ -130,4 +130,4 @@ Optional trailing sections: **Open Questions**, **References**.
 
 | SEP | Title | Type | Status |
 | --- | ----- | ---- | ------ |
-| [0000](./0000-native-workflow-dsl.md) | Native Workflow DSL: `quickdeploy.workflow/v1` | Standards Track | draft |
+| [0004](./0004-native-workflow-dsl.md) | Native Workflow DSL: `quickdeploy.workflow/v1` | Standards Track | draft |
