@@ -8,6 +8,8 @@ the generated `workflows.json` to populate official default workflow entries.
 
 - [Architecture](docs/architecture.md) — pipeline, decisions, mapping vs the sibling registries,
   conformance levels, v0.1 acceptance criteria, target layout
+- [Proposals (SEPs)](seps/README.md) — how substantial changes are proposed and reviewed;
+  drafts live in [`seps/`](seps/)
 - [Backlog index](docs/backlog/README.md) — milestones M0–M9 with links to every Linear issue in
   the [Workflows Registry](https://linear.app/quickdeploy-ai/project/workflows-registry-85a3df37abce)
   Linear project
